@@ -59,7 +59,37 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+  const elements = [...document.querySelectorAll('.key')];
+  const audioElements = [...document.getElementsByTagName('audio')];
+  const keys = elements.map(element => element.dataset.key);
 
+  function playOnKeyDown(key) {
+    audioElements.filter(audio => {
+      console.log(key)
+      if (audio.dataset.key === key) console.log('w')
+    })
+  };
+
+  window.addEventListener('keydown', (e) => {
+    if (keys.includes(e.keyCode.toString())) {
+      try {
+        elements.filter(element => element.dataset.key === e.keyCode.toString())[0]
+          .classList
+          .add('playing')
+        const play = audioElements
+          .filter(audio => audio.dataset.key === e.keyCode.toString())[0]
+          .play();
+          e.returnValue = false;
+      } finally {
+        setTimeout(() => {
+          elements.filter(element => element.dataset.key === e.keyCode.toString())[0]
+      .classList
+      .remove('playing')
+        }, 200)
+      };
+      e.returnValue = true;
+    }
+  });
 </script>
 
 
